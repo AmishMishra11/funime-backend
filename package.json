@@ -1,0 +1,27 @@
+{
+  "name": "funime-backend",
+  "version": "1.0.0",
+  "description": "Backend for funime media",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "server": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmishMishra11/funime-backend.git"
+  },
+  "author": "Amish Mishra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmishMishra11/funime-backend/issues"
+  },
+  "homepage": "https://github.com/AmishMishra11/funime-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  }
+}
