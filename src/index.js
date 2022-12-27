@@ -4,7 +4,7 @@ import cors from "cors";
 
 const app = express();
 
-const port = process.env.port || 9000;
+const port = process.env.PORT || 9000;
 
 app.get("/", (req, res) => {
   res.send("Hello Express App!");
