@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js",
-    "server": "nodemon src/index.js"
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/index.js",
+    "server": "nodemon --experimental-modules --es-module-specifier-resolution=node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mongoose": "^6.8.1",
     "nodemon": "^2.0.20"
   }
 }
