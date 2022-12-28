@@ -1,18 +1,24 @@
-import express from "express";
-
+import express, { urlencoded } from "express";
 import cors from "cors";
+import { connectToMongoose } from "./db/db.connect";
+
+import { router as authRouter } from "./routers/public/auth.routers";
 
 const app = express();
+
+app.use(express.json());
+app.use(urlencoded({ extended: true }));
+app.use(cors());
+
+connectToMongoose();
 
 const port = process.env.PORT || 9000;
 
 app.get("/", (req, res) => {
-  res.send("Hello Express App!");
+  res.send("Funime Backend App!");
 });
 
-app.get("/users", (req, res) => {
-  res.send("Users will be listed here...");
-});
+app.use("/auth", authRouter);
 
 app.listen(port, () => {
   console.log("server started");
