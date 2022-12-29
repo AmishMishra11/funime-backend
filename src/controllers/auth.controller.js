@@ -2,9 +2,7 @@ import { UserModule } from "../modules/user.module";
 
 const signupUser = async (req, res) => {
   try {
-    const { data } = req.body;
-
-    const { username, password, fullName, email } = data;
+    const { username, password, fullName, email } = req.body;
 
     const tempUserName = username;
     const tempUserEmail = email;
@@ -52,11 +50,7 @@ const signupUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    // const { data } = req.body;
-
     const { username, password } = req.body;
-
-    console.log("data", data);
 
     const tempUserName = username;
     const tempUserPassword = password;
@@ -72,7 +66,7 @@ const loginUser = async (req, res) => {
 
     if (foundUser) {
       if (checkCorrectUser) {
-        res.status(200).json(foundUser);
+        res.status(200).json({ foundUser: foundUser, encodedToken: "abcd" });
       } else {
         res.status(401).json({ message: "password incorrect" });
       }
