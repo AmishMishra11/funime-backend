@@ -1,4 +1,3 @@
-import { postSchema } from "../modules/post.module";
 import { UserModule } from "../modules/user.module";
 
 const signupUser = async (req, res) => {
@@ -47,15 +46,17 @@ const signupUser = async (req, res) => {
       res.status(201).json({ createdUser: createdUser, encodedToken: "abcd" });
     }
   } catch (e) {
-    res.status(500).json({ message: "failed to create new user", error: e });
+    res.status(500).json({ message: "Failed to create new user", error: e });
   }
 };
 
 const loginUser = async (req, res) => {
   try {
-    const { data } = req.body;
+    // const { data } = req.body;
 
-    const { username, password } = data;
+    const { username, password } = req.body;
+
+    console.log("data", data);
 
     const tempUserName = username;
     const tempUserPassword = password;
@@ -79,7 +80,9 @@ const loginUser = async (req, res) => {
       res.status(404).json({ message: "user not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "failed to create new user", error: e });
+    res
+      .status(500)
+      .json({ message: "Login failed. Try again later.", error: e });
   }
 };
 
