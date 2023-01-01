@@ -29,8 +29,28 @@ const userSchema = new Schema({
   fullName: String,
   password: String,
   portfolio: String,
-  profileBackgroundImg: String,
-  profileImg: String,
+  profileBackgroundImg: {
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/amish11/image/upload/v1655103095/social%20media/Gojo_Chibi_amoppk.jpg",
+      required: true,
+    },
+  },
+  profileImg: {
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/amish11/image/upload/v1654875318/social%20media/guest_ob9mu4.png",
+      required: true,
+    },
+  },
   updatedAt: Date,
   username: String,
 });
