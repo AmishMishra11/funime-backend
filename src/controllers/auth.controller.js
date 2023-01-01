@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import { UserModule } from "../modules/user.module";
 
 const signupUser = async (req, res) => {
@@ -30,18 +31,15 @@ const signupUser = async (req, res) => {
         fullName: fullName,
         password: password,
         portfolio: "",
-
-        profileBackgroundImg:
-          "https://res.cloudinary.com/amish11/image/upload/v1655103095/social%20media/Gojo_Chibi_amoppk.jpg",
-        profileImg:
-          "https://res.cloudinary.com/amish11/image/upload/v1654875318/social%20media/guest_ob9mu4.png",
-
         updatedAt: Date.now(),
         username: username,
       });
 
       const createdUser = await UserDocument.save();
-      res.status(201).json({ createdUser: createdUser, encodedToken: "abcd" });
+
+      const token = jwt.sign(username, process.env.TOKEN_SECRET);
+
+      res.status(201).json({ createdUser: createdUser, encodedToken: token });
     }
   } catch (e) {
     res.status(500).json({ message: "Failed to create new user", error: e });
@@ -66,7 +64,8 @@ const loginUser = async (req, res) => {
 
     if (foundUser) {
       if (checkCorrectUser) {
-        res.status(200).json({ foundUser: foundUser, encodedToken: "abcd" });
+        const token = jwt.sign(username, process.env.TOKEN_SECRET);
+        res.status(200).json({ foundUser: foundUser, encodedToken: token });
       } else {
         res.status(401).json({ message: "password incorrect" });
       }
