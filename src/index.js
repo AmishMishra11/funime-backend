@@ -3,8 +3,9 @@ import cors from "cors";
 import { connectToMongoose } from "./db/db.connect";
 
 import { router as authRouter } from "./routers/public/auth.routers";
-
 import { router as userRouter } from "./routers/protected/user.routers";
+import { router as postRouter } from "./routers/protected/post.routers";
+
 import { authVerify } from "./middleware/authVerify";
 
 import * as dotenv from "dotenv";
@@ -24,9 +25,14 @@ app.get("/", (req, res) => {
   res.send("Funime Backend App!");
 });
 
+// public routes
 app.use("/auth", authRouter);
+
+//protected routes
 app.use("/users", userRouter);
+app.use("/posts", postRouter);
 // app.use("/users", authVerify, userRouter);
+// app.use("/posts", authVerify, postRouter);
 
 app.listen(port, () => {
   console.log("server started");

@@ -34,8 +34,15 @@ const postSchema = new Schema({
       },
     ],
   },
-  postImg: String,
-  updatedAt: String,
+  postImg: {
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
+  },
+  updatedAt: Date,
   userId: Schema.Types.ObjectId,
   userImage: String,
   username: String,

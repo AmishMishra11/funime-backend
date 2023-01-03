@@ -5,7 +5,7 @@ const getAllUsers = async (req, res) => {
   try {
     const users = await UserModule.find({});
 
-    if (users) {
+    if ((await users).length) {
       res.status(200).json({ users: users });
     } else {
       res.status(404).json({ message: "Not found" });
@@ -33,6 +33,7 @@ const getOneUsers = async (req, res) => {
 
 const editUser = async (req, res) => {
   try {
+    
     const { id } = req.params;
     const { userData } = req.body;
 
