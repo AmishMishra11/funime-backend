@@ -1,4 +1,3 @@
-import { connect } from "mongoose";
 import { PostModule } from "../modules/post.module";
 import { UserModule } from "../modules/user.module";
 import { cloudinary } from "../utils/cloudinary";
@@ -138,21 +137,16 @@ const editPost = async (req, res) => {
 
     const foundPost = await PostModule.findById(postId);
 
-    //check if post is present or not
     if (foundPost) {
       const foundUser = await UserModule.findById(postUserId);
 
-      //   check if post we are trying to edit belongs to the user or not
       if (foundUser) {
         const newPostDetails = {
           content,
         };
-        // if post image is empty or not
         if (postImg) {
-          //if not empty check if its existing image or new image
           if (!postImg.includes("cloudinary")) {
             const postImageId = foundPost.postImg.public_id;
-            //if new image we delete the previous image if it exists
             if (postImageId) {
               await cloudinary.uploader.destroy(postImageId);
             }
@@ -185,8 +179,6 @@ const editPost = async (req, res) => {
             new: true,
           }
         );
-
-        // return all posts come here againg
         if (updatedPost) {
           const posts = await PostModule.find({});
 
