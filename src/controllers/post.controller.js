@@ -143,6 +143,7 @@ const editPost = async (req, res) => {
       if (foundUser) {
         const newPostDetails = {
           content,
+          // updatedAt: Date.now(),
         };
         if (postImg) {
           if (!postImg.includes("cloudinary")) {
@@ -185,10 +186,10 @@ const editPost = async (req, res) => {
           if ((await posts).length) {
             res.status(201).json({ posts: posts });
           } else {
-            res.status(404).json({ message: "No Post found" });
+            res.status(400).json({ message: "Cannot fetch post" });
           }
         } else {
-          res.status(404).json({ message: "User not found for now" });
+          res.status(400).json({ message: "Cannot update post" });
         }
       } else {
         res.status(400).json({
