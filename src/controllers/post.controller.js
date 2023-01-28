@@ -205,6 +205,118 @@ const editPost = async (req, res) => {
   }
 };
 
+const likePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { userId } = req.body;
+
+    const userDetails = await UserModule.findById(userId);
+    const postDetails = await PostModule.findById(postId);
+
+    if (userDetails) {
+      if (postDetails) {
+        const foundLikeUser = postDetails.likes.likedBy.filter(
+          (item) => item.userId == userId
+        );
+
+        if (!foundLikeUser.length) {
+          const newLiksUser = {
+            userId: userDetails._id,
+            username: userDetails.username,
+          };
+          const likeArray = postDetails.likes.likedBy;
+
+          likeArray.push(newLiksUser);
+
+          const newLikes = {
+            likeCount: postDetails.likes.likeCount + 1,
+            likedBy: likeArray,
+          };
+
+          const updatedPost = await PostModule.findByIdAndUpdate(
+            postId,
+            { likes: newLikes },
+            {
+              new: true,
+            }
+          );
+
+          const allPost = await PostModule.find({});
+
+          if (updatedPost) {
+            res.status(201).json({ allPost: allPost, myPost: updatedPost });
+          } else {
+            res.status(400).json({ message: "Cannot like post" });
+          }
+        } else {
+          res.status(400).json({ message: "You have already liked this post" });
+        }
+      } else {
+        res.status(404).json({ message: "Post not found" });
+      }
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (e) {
+    res.status(500).json({ message: "Cannot like post", error: e });
+  }
+};
+
+const dislikePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { userId } = req.body;
+
+    const userDetails = await UserModule.findById(userId);
+    const postDetails = await PostModule.findById(postId);
+
+    if (userDetails) {
+      if (postDetails) {
+        const foundLikeUser = postDetails.likes.likedBy.filter(
+          (item) => item.userId == userId
+        );
+
+        if (foundLikeUser.length) {
+          const likeArray = postDetails.likes.likedBy.filter(
+            (item) => item.userId != userId
+          );
+
+          const newLikes = {
+            likeCount: postDetails.likes.likeCount - 1,
+            likedBy: likeArray,
+          };
+
+          const updatedPost = await PostModule.findByIdAndUpdate(
+            postId,
+            { likes: newLikes },
+            {
+              new: true,
+            }
+          );
+
+          const allPost = await PostModule.find({});
+
+          if (updatedPost) {
+            res.status(201).json({ allPost: allPost, myPost: updatedPost });
+          } else {
+            res.status(400).json({ message: "Cannot like post" });
+          }
+        } else {
+          res
+            .status(400)
+            .json({ message: "You cannot dislikd a post you didnt like" });
+        }
+      } else {
+        res.status(404).json({ message: "Post not found" });
+      }
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (e) {
+    res.status(500).json({ message: "Cannot like post", error: e });
+  }
+};
+
 export {
   getAllPosts,
   createPost,
@@ -212,4 +324,6 @@ export {
   getUserPosts,
   deletePost,
   editPost,
+  likePost,
+  dislikePost,
 };
