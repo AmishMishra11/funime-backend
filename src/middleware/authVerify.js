@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const authVerify = (req, res, next) => {
   const token = req.headers["authorization"];
 
-  if (!token) return res.status(401).json({ message: "not authorized" });
+  if (!token) return res.status(401).json({ message: "unauthorized" });
 
   try {
     jwt.verify(token, process.env.TOKEN_SECRET);
@@ -11,7 +11,7 @@ const authVerify = (req, res, next) => {
   } catch (e) {
     console.log("error occured: ", e);
     res.status(401).json({
-      message: "not authorized",
+      message: "unauthorized",
     });
   }
 };

@@ -24,7 +24,6 @@ const followUser = async (req, res) => {
 
           userDetails.following.push(newFollowing);
 
-          console.log({ userDetails });
           const updatedUser = await userDetails.save();
 
           const newFollower = {
