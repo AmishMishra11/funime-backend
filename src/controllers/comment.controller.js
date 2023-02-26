@@ -180,7 +180,7 @@ const deleteCommnet = async (req, res) => {
         if (updatedPost) {
           res.status(201).json({ comments: updatedPost.comments });
         } else {
-          res.status(400).json({ message: "Cannot edit comment" });
+          res.status(400).json({ message: "Cannot delete comment" });
         }
       } else {
         res.status(404).json({ message: "Comment not found" });
@@ -189,7 +189,7 @@ const deleteCommnet = async (req, res) => {
       res.status(404).json({ message: "Post not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot edit Comment", error: e });
+    res.status(500).json({ message: "Cannot delete Comment", error: e });
   }
 };
 
