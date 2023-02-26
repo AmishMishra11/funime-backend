@@ -14,7 +14,7 @@ const getPostComments = async (req, res) => {
       res.status(404).json({ message: "Post not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot get Comments", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -68,7 +68,7 @@ const addComments = async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot add Comments", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -153,7 +153,7 @@ const editComment = async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot edit Comment", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -189,7 +189,7 @@ const deleteCommnet = async (req, res) => {
       res.status(404).json({ message: "Post not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot delete Comment", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -235,9 +235,10 @@ const likeComment = async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot edit Comment", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
+
 const dislikeComment = async (req, res) => {
   try {
     const { postId, commentId } = req.params;
@@ -279,7 +280,7 @@ const dislikeComment = async (req, res) => {
             }
           } else {
             res.status(400).json({
-              message: "You cannot dislike a comment you didnt like comment",
+              message: "You cannot dislike a comment you didnt like",
             });
           }
         } else {
@@ -292,7 +293,7 @@ const dislikeComment = async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot edit Comment", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 

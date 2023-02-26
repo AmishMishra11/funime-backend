@@ -1,3 +1,4 @@
+import { PostModule } from "../modules/post.module";
 import { UserModule } from "../modules/user.module";
 import { cloudinary } from "../utils/cloudinary";
 
@@ -8,10 +9,10 @@ const getAllUsers = async (req, res) => {
     if ((await users).length) {
       res.status(200).json({ users: users });
     } else {
-      res.status(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Users not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to fetch users", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -24,16 +25,15 @@ const getOneUsers = async (req, res) => {
     if (userDetails) {
       res.status(200).json({ user: userDetails });
     } else {
-      res.status(404).json({ message: "Not found" });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to fetch user", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
 const editUser = async (req, res) => {
   try {
-    
     const { id } = req.params;
     const { userData } = req.body;
 
@@ -42,7 +42,12 @@ const editUser = async (req, res) => {
     const { about, fullName, portfolio, profileBackgroundImg, profileImg } =
       userData;
 
-    const newUserDetails = { about, fullName, portfolio };
+    const newUserDetails = {
+      about,
+      fullName,
+      portfolio,
+      updatedAt: Date.now(),
+    };
 
     if (profileImg) {
       const oldProfileImage = userDetails.profileImg.public_id;
@@ -85,14 +90,19 @@ const editUser = async (req, res) => {
       new: true,
     });
 
-    // come here again
-    // ? res.status(201).json({ user: updatedUser,posts:allPosts })
+    if (profileImg) {
+      await PostModule.updateMany(
+        { userId: id },
+        { $set: { userImage: newUserDetails.profileImg.url } }
+      );
+    }
+    const allPosts = await PostModule.find({});
+
     updatedUser
-      ? res.status(201).json({ user: updatedUser })
-      : res.status(404).json({ message: "User not found for now" });
+      ? res.status(201).json({ user: updatedUser, posts: allPosts })
+      : res.status(400).json({ message: "Cannot edit Userdetails" });
   } catch (e) {
-    console.log("e", e);
-    res.status(500).json({ message: "Failed to edit user details", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 

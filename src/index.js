@@ -7,8 +7,10 @@ import { router as userRouter } from "./routers/protected/user.routers";
 import { router as postRouter } from "./routers/protected/post.routers";
 import { router as commentRouter } from "./routers/protected/comment.routers";
 import { authVerify } from "./middleware/authVerify";
+import { routeNotFound } from "./middleware/routeNotFound";
 
 import * as dotenv from "dotenv";
+import { errorHandler } from "./middleware/errorHandler";
 dotenv.config();
 
 const app = express();
@@ -29,12 +31,17 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouter);
 
 //protected routes
-app.use("/users", userRouter);
-app.use("/posts", postRouter);
-app.use("/comments", commentRouter);
 // app.use("/users", authVerify, userRouter);
-// app.use("/posts", authVerify, postRouter);
-// app.use("/comments", authVerify, commentRouter);
+app.use("/users", userRouter);
+app.use("/posts", authVerify, postRouter);
+app.use("/comments", authVerify, commentRouter);
+
+// if no routes match
+app.use(routeNotFound);
+
+// if something unexpected occures
+app.use(errorHandler);
+
 app.listen(port, () => {
   console.log("server started");
 });

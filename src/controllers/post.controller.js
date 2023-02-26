@@ -12,7 +12,7 @@ const getAllPosts = async (req, res) => {
       res.status(404).json({ message: "No Post found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to fetch Posts", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -62,10 +62,10 @@ const createPost = async (req, res) => {
 
       res.status(201).json({ createdPost: createdPost });
     } else {
-      res.status(400).json({ message: "User Not Authorized" });
+      res.status(400).json({ message: "Cannot Create Post" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to create Posts", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -78,10 +78,10 @@ const getOnePost = async (req, res) => {
     if (postDetails) {
       res.status(200).json({ post: postDetails });
     } else {
-      res.status(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Post not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to fetch Post", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -94,10 +94,10 @@ const getUserPosts = async (req, res) => {
     if ((await userPosts).length) {
       res.status(200).json({ posts: userPosts });
     } else {
-      res.status(404).json({ message: "Not found" });
+      res.status(404).json({ message: "User Post not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to fetch Post", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -119,13 +119,13 @@ const deletePost = async (req, res) => {
       if (await posts) {
         res.status(200).json({ posts: posts });
       } else {
-        res.status(400).json({ message: "Cannot fetch post" });
+        res.status(400).json({ message: "Cannot delete post" });
       }
     } else {
-      res.status(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Post not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to fetch Post", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -143,7 +143,7 @@ const editPost = async (req, res) => {
       if (foundUser) {
         const newPostDetails = {
           content,
-          // updatedAt: Date.now(),
+          updatedAt: Date.now(),
         };
         if (postImg) {
           if (!postImg.includes("cloudinary")) {
@@ -186,22 +186,21 @@ const editPost = async (req, res) => {
           if ((await posts).length) {
             res.status(201).json({ posts: posts });
           } else {
-            res.status(400).json({ message: "Cannot fetch post" });
+            res.status(400).json({ message: "Cannot update post" });
           }
         } else {
           res.status(400).json({ message: "Cannot update post" });
         }
       } else {
         res.status(400).json({
-          message:
-            "Post you are trying to edit does not belong to logged in user",
+          message: "Cannot edit post",
         });
       }
     } else {
       res.status(404).json({ message: "Post not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to edit Post", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -258,7 +257,7 @@ const likePost = async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot like post", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -299,7 +298,7 @@ const dislikePost = async (req, res) => {
           if (updatedPost) {
             res.status(201).json({ allPost: allPost, myPost: updatedPost });
           } else {
-            res.status(400).json({ message: "Cannot like post" });
+            res.status(400).json({ message: "Cannot dislike post" });
           }
         } else {
           res
@@ -313,7 +312,7 @@ const dislikePost = async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
   } catch (e) {
-    res.status(500).json({ message: "Cannot like post", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 

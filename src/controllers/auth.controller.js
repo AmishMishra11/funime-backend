@@ -37,12 +37,14 @@ const signupUser = async (req, res) => {
 
       const createdUser = await UserDocument.save();
 
-      const token = jwt.sign(username, process.env.TOKEN_SECRET);
+      const token = jwt.sign({ username }, process.env.TOKEN_SECRET, {
+        expiresIn: "24h",
+      });
 
       res.status(201).json({ createdUser: createdUser, encodedToken: token });
     }
   } catch (e) {
-    res.status(500).json({ message: "Failed to create new user", error: e });
+    res.status(500).json({ message: "Internal Server Error", error: e });
   }
 };
 
@@ -64,7 +66,9 @@ const loginUser = async (req, res) => {
 
     if (foundUser) {
       if (checkCorrectUser) {
-        const token = jwt.sign(username, process.env.TOKEN_SECRET);
+        const token = jwt.sign({ username }, process.env.TOKEN_SECRET, {
+          expiresIn: "24h",
+        });
         res.status(200).json({ foundUser: foundUser, encodedToken: token });
       } else {
         res.status(401).json({ message: "password incorrect" });
@@ -73,9 +77,7 @@ const loginUser = async (req, res) => {
       res.status(404).json({ message: "user not found" });
     }
   } catch (e) {
-    res
-      .status(500)
-      .json({ message: "Login failed. Try again later.", error: e });
+    res.status(500).json({ message: "Interner Server Error", error: e });
   }
 };
 
