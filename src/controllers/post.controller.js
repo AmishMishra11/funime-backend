@@ -60,7 +60,13 @@ const createPost = async (req, res) => {
 
       const createdPost = await PostDocument.save();
 
-      res.status(201).json({ createdPost: createdPost });
+      const posts = await PostModule.find({});
+
+      if ((await posts).length) {
+        res.status(200).json({ posts: posts });
+      } else {
+        res.status(404).json({ message: "No Post found" });
+      }
     } else {
       res.status(400).json({ message: "Cannot Create Post" });
     }
