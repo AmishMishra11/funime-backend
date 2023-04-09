@@ -39,7 +39,7 @@ const followUser = async (req, res) => {
 
           if (updatedUser && updatedFollowUser) {
             res
-              .status(201)
+              .status(200)
               .json({ user: updatedUser, followUser: updatedFollowUser });
           } else {
             res.status(400).json({ message: "Cannot follow this User" });
@@ -93,7 +93,7 @@ const unfollowUser = async (req, res) => {
 
           if (updatedUser && updatedFollowUser) {
             res
-              .status(201)
+              .status(200)
               .json({ user: updatedUser, followUser: updatedFollowUser });
           } else {
             res.status(400).json({ message: "Cannot unfollow this User" });

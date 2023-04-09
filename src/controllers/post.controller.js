@@ -63,7 +63,7 @@ const createPost = async (req, res) => {
       const posts = await PostModule.find({});
 
       if ((await posts).length) {
-        res.status(200).json({ posts: posts });
+        res.status(201).json({ posts: posts });
       } else {
         res.status(404).json({ message: "No Post found" });
       }
@@ -100,7 +100,7 @@ const getUserPosts = async (req, res) => {
     if ((await userPosts).length) {
       res.status(200).json({ posts: userPosts });
     } else {
-      res.status(404).json({ message: "User Post not found" });
+      res.status(200).json({ posts: [] });
     }
   } catch (e) {
     res.status(500).json({ message: "Internal Server Error", error: e });
@@ -249,7 +249,7 @@ const likePost = async (req, res) => {
           const allPost = await PostModule.find({});
 
           if (updatedPost) {
-            res.status(201).json({ allPost: allPost, myPost: updatedPost });
+            res.status(201).json({ posts: allPost });
           } else {
             res.status(400).json({ message: "Cannot like post" });
           }

@@ -84,10 +84,10 @@ const editComment = async (req, res) => {
     if (userDetails) {
       if (postDetails) {
         const foundComment = postDetails.comments.filter(
-          (item) => item.id === commentId
+          (item) => item.id == commentId
         );
 
-        if (foundComment.length.length) {
+        if (foundComment.length) {
           const newCommentData = {
             content: content,
             updatedAt: Date.now(),
@@ -165,7 +165,7 @@ const deleteCommnet = async (req, res) => {
 
     if (postDetails) {
       const foundComment = postDetails.comments.filter(
-        (item) => item._id === commentId
+        (item) => item._id == commentId
       );
 
       if (foundComment.length) {

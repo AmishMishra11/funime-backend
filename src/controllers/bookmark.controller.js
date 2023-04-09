@@ -61,33 +61,28 @@ const removeBookmark = async (req, res) => {
     const { userId } = req.body;
 
     const userDetails = await UserModule.findById(userId);
-    const postDetails = await PostModule.findById(postId);
 
     if (userDetails) {
-      if (postDetails) {
-        const foundBookmark = userDetails.bookmarks.filter(
-          (item) => item.id == postId
+      const foundBookmark = userDetails.bookmarks.filter(
+        (item) => item.id == postId
+      );
+
+      if (foundBookmark.length) {
+        const newBookmarks = userDetails.bookmarks.filter(
+          (item) => item.id !== postId
         );
 
-        if (foundBookmark.length) {
-          const newBookmarks = userDetails.bookmarks.filter(
-            (item) => item.id !== postId
-          );
+        userDetails.bookmarks = newBookmarks;
 
-          userDetails.bookmarks = newBookmarks;
+        const updatedUser = await userDetails.save();
 
-          const updatedUser = await userDetails.save();
-
-          if (updatedUser) {
-            res.status(201).json({ bookmarks: updatedUser.bookmarks });
-          } else {
-            res.status(400).json({ message: "Cannot remove this bookmark" });
-          }
+        if (updatedUser) {
+          res.status(201).json({ bookmarks: updatedUser.bookmarks });
         } else {
-          res.status(400).json({ message: "Cannot remove this bookmark." });
+          res.status(400).json({ message: "Cannot remove this bookmark" });
         }
       } else {
-        res.status(404).json({ message: "Post not found" });
+        res.status(400).json({ message: "Cannot remove this bookmark." });
       }
     } else {
       res.status(404).json({ message: "User not found" });
