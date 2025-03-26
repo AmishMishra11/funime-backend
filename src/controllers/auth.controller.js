@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { UserModule } from "../modules/user.module";
+import { UserModule } from "../modules/user.module.js";
 
 const signupUser = async (req, res) => {
   try {

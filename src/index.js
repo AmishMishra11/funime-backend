@@ -2,15 +2,15 @@ import express, { urlencoded } from "express";
 import cors from "cors";
 import { connectToMongoose } from "./db/db.connect.js";
 
-import { router as authRouter } from "./routers/public/auth.routers";
-import { router as userRouter } from "./routers/protected/user.routers";
-import { router as postRouter } from "./routers/protected/post.routers";
-import { router as commentRouter } from "./routers/protected/comment.routers";
-import { authVerify } from "./middleware/authVerify";
-import { routeNotFound } from "./middleware/routeNotFound";
+import { router as authRouter } from "./routers/public/auth.routers.js";
+import { router as userRouter } from "./routers/protected/user.routers.js";
+import { router as postRouter } from "./routers/protected/post.routers.js";
+import { router as commentRouter } from "./routers/protected/comment.routers.js";
+import { authVerify } from "./middleware/authVerify.js";
+import { routeNotFound } from "./middleware/routeNotFound.js";
 
 import * as dotenv from "dotenv";
-import { errorHandler } from "./middleware/errorHandler";
+import { errorHandler } from "./middleware/errorHandler.js";
 dotenv.config();
 
 const app = express();

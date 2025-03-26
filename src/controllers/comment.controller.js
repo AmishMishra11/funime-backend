@@ -1,6 +1,5 @@
-import { connectToMongoose } from "../db/db.connect";
-import { PostModule } from "../modules/post.module";
-import { UserModule } from "../modules/user.module";
+import { PostModule } from "../modules/post.module.js";
+import { UserModule } from "../modules/user.module.js";
 
 const getPostComments = async (req, res) => {
   try {

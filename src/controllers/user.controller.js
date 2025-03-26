@@ -1,6 +1,6 @@
-import { PostModule } from "../modules/post.module";
-import { UserModule } from "../modules/user.module";
-import { cloudinary } from "../utils/cloudinary";
+import { PostModule } from "../modules/post.module.js";
+import { UserModule } from "../modules/user.module.js";
+import { cloudinary } from "../utils/cloudinary.js";
 
 const getAllUsers = async (req, res) => {
   try {

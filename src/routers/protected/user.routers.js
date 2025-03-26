@@ -3,13 +3,16 @@ import {
   addBookmark,
   getBookmarks,
   removeBookmark,
-} from "../../controllers/bookmark.controller";
-import { followUser, unfollowUser } from "../../controllers/follow.controller";
+} from "../../controllers/bookmark.controller.js";
+import {
+  followUser,
+  unfollowUser,
+} from "../../controllers/follow.controller.js";
 import {
   editUser,
   getAllUsers,
   getOneUsers,
-} from "../../controllers/user.controller";
+} from "../../controllers/user.controller.js";
 
 const router = express.Router();
 

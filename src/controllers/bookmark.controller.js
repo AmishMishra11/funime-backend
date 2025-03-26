@@ -1,5 +1,5 @@
-import { PostModule } from "../modules/post.module";
-import { UserModule } from "../modules/user.module";
+import { PostModule } from "../modules/post.module.js";
+import { UserModule } from "../modules/user.module.js";
 
 const getBookmarks = async (req, res) => {
   try {

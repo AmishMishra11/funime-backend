@@ -1,4 +1,4 @@
-import { UserModule } from "../modules/user.module";
+import { UserModule } from "../modules/user.module.js";
 
 const followUser = async (req, res) => {
   try {
