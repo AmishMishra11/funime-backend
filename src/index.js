@@ -1,6 +1,6 @@
 import express, { urlencoded } from "express";
 import cors from "cors";
-import { connectToMongoose } from "./db/db.connect";
+import { connectToMongoose } from "./db/db.connect.js";
 
 import { router as authRouter } from "./routers/public/auth.routers";
 import { router as userRouter } from "./routers/protected/user.routers";
