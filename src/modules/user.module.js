@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { postSchema } from "./post.module";
+import { postSchema } from "./post.module.js";
 
 const { Schema } = mongoose;
 
